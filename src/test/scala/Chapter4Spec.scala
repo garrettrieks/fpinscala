@@ -4,7 +4,7 @@ import org.specs2.mutable.Specification
 import org.specs2.specification.Scope
 import scala.{Option => _, Some => _, Either => _, _}
 
-object Chapter4Spec extends Specification {
+object Chapter4OptionSpec extends Specification {
   import Option._
 
   "Exercise 4.1" should {
@@ -49,7 +49,7 @@ object Chapter4Spec extends Specification {
   }
 
   "Exercise 4.5" should {
-    "perform traverse on an Option" in new context {
+    "perform traverse that maps to Option" in new context {
       traverse(List(0, 1))(Some(_)) === Some(List(0,1))
       traverse(List(0, 1))(x => if (x > 0) Some(x) else None) === None
     }
@@ -58,4 +58,5 @@ object Chapter4Spec extends Specification {
   trait context extends Scope {
     def none[A]: Option[A] = None
   }
+
 }
