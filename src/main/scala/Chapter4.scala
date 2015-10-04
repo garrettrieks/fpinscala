@@ -3,6 +3,7 @@ package grieks.fpinscala
 import scala.{Option => _, Some => _, Either => _, _} // hide std library `Option`, `Some` and `Either`, since we are writing our own in this chapter
 
 sealed trait Option[+A] {
+
   // 4.1
   def map[B](f: A => B): Option[B] = this match {
     case None => None
