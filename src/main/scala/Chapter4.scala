@@ -18,16 +18,16 @@ sealed trait Option[+A] {
   def flatMap[B](f: A => Option[B]): Option[B] = map(f).getOrElse(None)
 
   // TODO: no pattern matching
-  def orElse[B>:A](ob: => Option[B]): Option[B] = this match {
+  def orElse[B>:A](ob: => Option[B]): Option[B] = map(Some(_)).getOrElse(ob)/*this match {
     case None => ob
     case Some(_) => this
-  }
+  }*/
 
   // TODO: no pattern matching
-  def filter(f: A => Boolean): Option[A] = this match {
+  def filter(f: A => Boolean): Option[A] = flatMap(a => if (f(a)) Some(a) else None)/*this match {
     case Some(a) if f(a) => this
     case _ => None
-  }
+  }*/
 }
 case class Some[+A](get: A) extends Option[A]
 case object None extends Option[Nothing]
@@ -107,6 +107,7 @@ case class Left[+E](get: E) extends Either[E,Nothing]
 case class Right[+A](get: A) extends Either[Nothing,A]
 
 object Either {
+  // 4.7
   def traverse[E,A,B](es: List[A])(f: A => Either[E, B]): Either[E, List[B]] = es match {
     case Cons(head,tail) => f(head).flatMap(h => traverse(tail)(f).map(t => Cons(h,t)))
     case Nil => Right(Nil)
