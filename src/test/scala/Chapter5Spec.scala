@@ -56,9 +56,17 @@ object Chapter5Spec extends Specification {
     }
   }
 
+  "Exercise 5.4" should {
+    "return True if all elements meet the predicate" in new context {
+      intStream.forAll(_ > 0) must beTrue
+    }
+
+    "return False if not all elements meet the predicate" in new context {
+      intStream.forAll(_ < 2) must beFalse
+    }
+  }
+
   trait context extends Scope {
-    lazy val intStream = Stream(1,2,3) // Stream(() => 1, () => 2, () => 3)
-    //lazy val emptyInt: Stream[Int] = empty[Int]
-    //val consStream: Stream[Int] = Cons(() => 3, () => emptyInt)
+    lazy val intStream = Stream(1,2,3)
   }
 }
