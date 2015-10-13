@@ -66,6 +66,20 @@ object Chapter5Spec extends Specification {
     }
   }
 
+  "Exercise 5.5" should {
+    "take all elements while predicate is true" in new context {
+      intStream.takeWhileF(_ < 3).toList must_== List(1,2)
+    }
+
+    "not take elements that meet predicate, following elements that don't" in new context {
+      Stream(1,3,2).takeWhileF(_ < 3).toList must_== List(1)
+    }
+
+    "return Empty Stream if predicate is not met" in new context {
+      intStream.takeWhileF(_ < 1) must_== Empty
+    }
+  }
+
   trait context extends Scope {
     lazy val intStream = Stream(1,2,3)
   }
